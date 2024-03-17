@@ -19,7 +19,7 @@ const {register, control, handleSubmit} = useForm<IssueForm>();
     <form 
         className='max-w-xl space-y-3'
         onSubmit={handleSubmit(async (data) => {
-            await axios.post('api/issues', data);
+            await axios.post('/api/issues', data);
             router.push('/issues');
         })}
         >
