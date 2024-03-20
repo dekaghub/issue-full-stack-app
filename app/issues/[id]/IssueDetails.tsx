@@ -15,7 +15,7 @@ const IssueDetails = ({ issue }: { issue: Issue }) => {
                 <ReactMarkdown>{issue.description}</ReactMarkdown>
             </Card>
         </>
-    )
-}
+    );
+};
 
-export default IssueDetails
+export default IssueDetails;

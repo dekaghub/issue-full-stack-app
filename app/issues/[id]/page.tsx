@@ -11,9 +11,9 @@ interface Props {
 const IssueDetailPage = async ({ params }: Props) => {
     const issue = await prisma.issue.findUnique({
         where: { id: parseInt(params.id) }
-    })
-    if (!issue)
-        notFound();
+    });
+
+    if (!issue) notFound();
 
     return (
         <Grid columns={{ initial: "1", sm: "2" }} gap="5">
@@ -24,7 +24,7 @@ const IssueDetailPage = async ({ params }: Props) => {
                 <EditIssueButton issueId={issue.id} />
             </Box>
         </Grid>
-    )
-}
+    );
+};
 
-export default IssueDetailPage
+export default IssueDetailPage;
