@@ -1,4 +1,5 @@
 'use client'
+import { Spinner } from '@/app/components';
 import { AlertDialog, Button, Flex } from '@radix-ui/themes'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -7,42 +8,53 @@ import { useState } from 'react';
 const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
     const router = useRouter();
     const [error, setError] = useState(false);
-    const handleDelete =  async () => {
+    const [isDeleting, setDeleting] = useState(false);
+    const handleDelete = async () => {
         try {
+            setDeleting(true);
             await axios.delete('/api/issues/' + issueId);
             router.push('/issues')
             router.refresh();
         } catch (error) {
+            setDeleting(false);
             setError(true);
         }
     }
 
     return (
         <>
-        <AlertDialog.Root>
-            <AlertDialog.Trigger>
-                <Button color='red'>Delete Issue</Button>
-            </AlertDialog.Trigger>
-            <AlertDialog.Content>
-                <AlertDialog.Title>Confirm Delete?</AlertDialog.Title>
-                <AlertDialog.Description>Are you sure you want to delete this issue?</AlertDialog.Description>
-                <Flex direction="row" mt="4" gap="4">
-                    <AlertDialog.Action>
-                        <Button color="red" onClick={handleDelete}>Delete Issue</Button>
-                    </AlertDialog.Action>
-                    <AlertDialog.Cancel>
-                        <Button color="iris">Cancel</Button>
-                    </AlertDialog.Cancel>
-                </Flex>
-            </AlertDialog.Content>
-        </AlertDialog.Root>
-        <AlertDialog.Root open={error}>
-            <AlertDialog.Content>
-                <AlertDialog.Title>Error</AlertDialog.Title>
-                <AlertDialog.Description>Something wrong with deleting issue.</AlertDialog.Description>
-                <Button color="mint" variant='outline' mt="2" onClick={() => setError(false)}>OK</Button>
-            </AlertDialog.Content>
-        </AlertDialog.Root>
+            <AlertDialog.Root>
+                <AlertDialog.Trigger>
+                    <Button 
+                        color='red'
+                        disabled={isDeleting}
+                    >
+                        Delete Issue
+                    {isDeleting && < Spinner />}
+                    </Button>
+                </AlertDialog.Trigger>
+                <AlertDialog.Content>
+                    <AlertDialog.Title>Confirm Delete?</AlertDialog.Title>
+                    <AlertDialog.Description>Are you sure you want to delete this issue?</AlertDialog.Description>
+                    <Flex direction="row" mt="4" gap="4">
+                        <AlertDialog.Action>
+                            <Button color="red" onClick={handleDelete}>
+                                Delete Issue
+                            </Button>
+                        </AlertDialog.Action>
+                        <AlertDialog.Cancel>
+                            <Button color="iris">Cancel</Button>
+                        </AlertDialog.Cancel>
+                    </Flex>
+                </AlertDialog.Content>
+            </AlertDialog.Root>
+            <AlertDialog.Root open={error}>
+                <AlertDialog.Content>
+                    <AlertDialog.Title>Error</AlertDialog.Title>
+                    <AlertDialog.Description>Something wrong with deleting issue.</AlertDialog.Description>
+                    <Button color="mint" variant='outline' mt="2" onClick={() => setError(false)}>OK</Button>
+                </AlertDialog.Content>
+            </AlertDialog.Root>
         </>
     )
 }
