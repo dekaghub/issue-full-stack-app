@@ -18,17 +18,19 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
 
     if (error) return null; // do not render component
 
+    const assignIssue = (userId: string) => {
+        axios
+            .patch('/api/issues/' + issue.id, { assignedToUserId: userId || null })
+            .catch(() => {
+                toast.error("Assign Failed")
+            })
+    }
+
     return (
         <>
             <Select.Root
                 defaultValue={issue.assignedToUserId || ""}
-                onValueChange={(userId) => {
-                    axios
-                        .patch('/api/issues/' + issue.id, { assignedToUserId: userId || null })
-                        .catch(() => {
-                            toast.error("Assign Failed")
-                        })
-                }}
+                onValueChange={assignIssue}
             >
                 <Select.Trigger placeholder='Assignee...' />
                 <Select.Content>
