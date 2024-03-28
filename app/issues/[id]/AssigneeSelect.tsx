@@ -15,7 +15,7 @@ const AssigneeSelect = () => {
 
     if (isLoading) return <Skeleton />
 
-    if (error) return null;
+    if (error) return null; // do not render component
 
     return (
         <Select.Root>
