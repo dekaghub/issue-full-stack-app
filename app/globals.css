@@ -17,3 +17,9 @@
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+@layer utilities {
+  .nav-link {
+    @apply text-emerald-800 hover:text-emerald-950 transition-colors
+  }
+}
