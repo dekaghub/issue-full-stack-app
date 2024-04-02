@@ -20,6 +20,6 @@ body {
 
 @layer utilities {
   .nav-link {
-    @apply text-emerald-800 hover:text-emerald-950 transition-colors
+    @apply text-emerald-300 hover:text-emerald-500 transition-colors
   }
 }

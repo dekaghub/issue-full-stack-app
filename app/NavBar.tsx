@@ -70,7 +70,7 @@ const NavLinks = () => {
                     <Link
                         className={classnames({
                             "nav-link": true,
-                            '!text-emerald-950 font-semibold': link.href === currentPath,
+                            '!text-emerald-600 font-bold tracking-wider': link.href === currentPath,
                         })}
                         href={link.href}>
                         {link.label}
