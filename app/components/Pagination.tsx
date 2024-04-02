@@ -26,10 +26,10 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
     return (
         <Flex align="center" gap="3">
             <Text size="2">Page {currentPage} of {pageCount}</Text>
-            <Button variant="surface" disabled={currentPage === 1} onClick={() => changePage(1)}><DoubleArrowLeftIcon /></Button>
-            <Button variant="surface" disabled={currentPage === 1} onClick={() => changePage(currentPage - 1)}><ChevronLeftIcon /></Button>
-            <Button variant="surface" disabled={currentPage === pageCount} onClick={() => changePage(currentPage + 1)}><ChevronRightIcon /></Button>
-            <Button variant="surface" disabled={currentPage === pageCount} onClick={() => changePage(pageCount)}><DoubleArrowRightIcon /></Button>
+            <Button variant="surface" color="mint" disabled={currentPage === 1} onClick={() => changePage(1)}><DoubleArrowLeftIcon /></Button>
+            <Button variant="surface" color="mint" disabled={currentPage === 1} onClick={() => changePage(currentPage - 1)} highContrast><ChevronLeftIcon /></Button>
+            <Button variant="surface" color="mint" disabled={currentPage === pageCount} onClick={() => changePage(currentPage + 1)} highContrast><ChevronRightIcon /></Button>
+            <Button variant="surface" color="mint" disabled={currentPage === pageCount} onClick={() => changePage(pageCount)}><DoubleArrowRightIcon /></Button>
         </Flex>
     )
 }
