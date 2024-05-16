@@ -32,7 +32,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
                 defaultValue={issue.assignedToUserId || ""}
                 onValueChange={assignIssue}
             >
-                <Select.Trigger placeholder='Assignee...' />
+                <Select.Trigger />
                 <Select.Content>
                     <Select.Group>
                         <Select.Label>Suggestions</Select.Label>
