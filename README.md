@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project based on a tutorial. A simple issue management app using Google Auth, Radix UI, PostgreSQL (with Supabase), etc.
+This is a [Next.js](https://nextjs.org/) project based on a tutorial. A simple issue management app using React, Google Auth, Radix UI, PostgreSQL (with Supabase), etc.
 
 ### Demo
 
