@@ -15,10 +15,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Get version from releases.info
+    - name: Get version from release.info
       id: get_version
       run: |
-        version=$(grep -oP '(?<=version: ).*' releases.info)
+        version=$(grep -oP '(?<=version: ).*' release.info)
         echo "::set-output name=version::$version"
         
     - name: Login to Docker Hub
