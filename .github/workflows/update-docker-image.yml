@@ -1,0 +1,60 @@
+name: Build Docker Image & Push to Docker Hub, Update main.ts in cdk8s-ts repo
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  docker-build-push:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Get version from releases.info
+      id: get_version
+      run: |
+        version=$(grep -oP '(?<=version: ).*' releases.info)
+        echo "::set-output name=version::$version"
+        
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
+    - name: Build the Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/issue-demo:${{ steps.get_version.outputs.version }}
+
+  update-cdk8s-repo:
+
+    needs: docker-build-push
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: checkout cdk8s git repo
+      uses: actions/checkout@v4
+      with:
+        repository: dekaghub/cdk8s-ts
+        token: ${{ secrets.GIT_PAT_CDK8S }}
+        path: cdk8s-ts
+
+    - name: Update the docker image in cdk8s main.ts
+      run: |
+        cd cdk8s-ts
+        sed -i '' -e "s/${{ secrets.DOCKERHUB_USERNAME }}\/issue-demo:.*/${{ secrets.DOCKERHUB_USERNAME }}\/issue-demo:${{ steps.get_version.outputs.version }}/g" ./main.ts
+        git config --global user.name "dekaghub"
+        git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+        git add main.ts
+        git commit -m "updated docker image to ${{ steps.get_version.outputs.version }}"
+        git push origin main
+
