@@ -57,7 +57,7 @@ jobs:
     - name: Update the docker image in cdk8s main.ts
       run: |
         cd cdk8s-ts
-        sed -i '' -e "s/${{ secrets.DOCKERHUB_USERNAME }}\/issue-demo:.*/${{ secrets.DOCKERHUB_USERNAME }}\/issue-demo:${{ steps.get_version.outputs.version }}/g" ./main.ts
+        sed -i '' -e "s/${{ secrets.DOCKERHUB_USERNAME }}\/issue-demo:.*/${{ secrets.DOCKERHUB_USERNAME }}\/issue-demo:${{ steps.get_version.outputs.version }}/g" main.ts
         git config --global user.name "dekaghub"
         git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
         git add main.ts

@@ -35,10 +35,6 @@ ENV GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
 ENV NEXTAUTH_URL=$NEXTAUTH_URL
 ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
 
-# echo db url
-RUN echo test
-RUN echo $DATABASE_URL DATABASE_URL
-
 # Build the Next.js application
 RUN npx prisma generate && npm run build
 
