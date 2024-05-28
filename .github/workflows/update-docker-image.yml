@@ -59,7 +59,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: dekaghub/cdk8s-ts
-        ref: main
+        ref: master
         token: ${{ secrets.GIT_PAT_CDK8S }}
         path: cdk8s-ts
 
