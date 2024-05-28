@@ -68,8 +68,9 @@ jobs:
         cd cdk8s-ts
         sed -i "s/${{ secrets.DOCKERHUB_USERNAME }}\/issue-demo:.*/${{ secrets.DOCKERHUB_USERNAME }}\/issue-demo:${{ steps.get_version.outputs.version }}'/g" main.ts
         head -n 38 main.ts | tail -n 6 
+        git config user.email "${{ secrets.GIT_USER_EMAIL }}"
+        git config user.name "dekaghub"
         git add main.ts
         git commit -m "updated docker image to ${{ steps.get_version.outputs.version }}"
-        git push --set-upstream origin main
-        git push origin main
+        git push
 
