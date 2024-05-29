@@ -45,5 +45,5 @@ export default IssuesPage;
 
 export const metadata: Metadata = {
     title: "Issues",
-    description: "View all issues"
+    description: "View all Issues"
   };
