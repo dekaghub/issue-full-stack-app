@@ -28,12 +28,12 @@ ARG GOOGLE_CLIENT_SECRET
 ARG NEXTAUTH_URL
 ARG NEXTAUTH_SECRET
 
-# Set environment variables
-ENV DATABASE_URL=$DATABASE_URL
-ENV GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
-ENV GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
-ENV NEXTAUTH_URL=$NEXTAUTH_URL
-ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
+# Create the .env file
+RUN echo "DATABASE_URL=$DATABASE_URL" >> /app/.env \
+    && echo "GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID" >> /app/.env \
+    && echo "GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET" >> /app/.env \
+    && echo "NEXTAUTH_URL=$NEXTAUTH_URL" >> /app/.env \
+    && echo "NEXTAUTH_SECRET=$NEXTAUTH_SECRET" >> /app/.env
 
 # Build the Next.js application
 RUN npx prisma generate && npm run build
@@ -53,6 +53,7 @@ COPY --from=builder /app/public ./public
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
+COPY --from=builder /app/.env ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
